@@ -21,6 +21,7 @@ struct dbl
     inline dbl operator-=(const dbl &b) {return dbl(x-=b.x);}
     inline dbl operator*=(const dbl &b) {return dbl(x*=b.x);}
     inline dbl operator/=(const dbl &b) {return dbl(x/=b.x);}
+    template <typename U> inline dbl operator^=(const U &b) {dbl tmp=(*this)^b;*this=tmp;return tmp;}
     inline bool operator==(const dbl &b) const {return (0 == ((*this)-b).sgn());}
     inline bool operator!=(const dbl &b) const {return (0 != ((*this)-b).sgn());}
     inline bool operator<(const dbl &b) const {return (-1 == ((*this)-b).sgn());}
