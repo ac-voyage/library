@@ -12,6 +12,7 @@ struct dbl
     inline T tabs(void){return ((x>=-eps)&&(x<=eps))?(0.0):((x>eps)?(x):(-x));}
     inline dbl abs(void){return dbl(tabs());}
     template <typename U> inline dbl &operator=(const U b) {x=(T)b;return (*this);}
+    inline dbl operator-(void) const {return dbl(-x);}
     inline dbl operator+(const dbl &b) const {return dbl(x+b.x);}
     inline dbl operator-(const dbl &b) const {return dbl(x-b.x);}
     inline dbl operator*(const dbl &b) const {return dbl(x*b.x);}
