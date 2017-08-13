@@ -101,7 +101,7 @@ struct segment_tree
 
     segment_tree(void):N(STMAX){}
     segment_tree(int n):N(n){}
-    build(int n){N = n; build(1,1,N);}
+    void build(int n){N = n; build(1,1,N);}
     void update(int L, int R, lazy_t act) {upd(L,R,act,1,1,N);}
     node_t query(int L, int R) {return qry(L,R,1,1,N);}
 };
