@@ -1,4 +1,7 @@
 /* 2D Point Class, by Abreto<m@abreto.net> */
+#include <cmath>
+
+using namespace std;
 
 template <typename T>
 struct point
