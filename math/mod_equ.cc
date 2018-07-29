@@ -8,6 +8,18 @@ class mod_equ_resolver
 {
     typedef long long int ll;
     ll a, m;
+    inline void gurantee(void)
+    {
+        if(a < 0)
+        {
+            ll k = (-a) / m;
+            a += (k+1ll) * m;
+            a = (a + m) % m;
+        } else {
+            a %= m;
+        }
+        // printf("x = %lld (mod %lld)\n",a, m);
+    }
 public:
     mod_equ_resolver(void)
     {
@@ -27,18 +39,6 @@ public:
         x = y;
         y = t - m / n * y;
         return g;
-    }
-    void gurantee(void)
-    {
-        if(a < 0)
-        {
-            ll k = (-a) / m;
-            a += (k+1ll) * m;
-            a = (a + m) % m;
-        } else {
-            a %= m;
-        }
-        // printf("x = %lld (mod %lld)\n",a, m);
     }
     int onemore(ll a2, ll m2)
     {
