@@ -10,14 +10,8 @@ class abio
     bool reached_eof;
     size_t ip, isz;
     size_t op, osz;
-    inline void clear_ibuf(void)
-    {
-        ip = isz = 0u;
-    }
-    inline void clear_obuf(void)
-    {
-        op = osz = 0u;
-    }
+    inline void clear_ibuf(void) { ip = isz = 0u; }
+    inline void clear_obuf(void) { op = osz = 0u; }
     inline void clear_buffer(void)
     {
         reached_eof = false;
@@ -109,10 +103,14 @@ public:
         if(flag)x*=(-1);
         return (*this);
     }
-    abio &read_s(char *str, char interrupt = ' ')
+    /* set interrupt as '\n' to read a whole line. */
+    abio &read_s(char *s, const char interrupt = ' ')
     {
         int ch = getchar();
-        if(EOF == ch) return (this->reach_eof());
+        while((EOF!=ch)&&(ch<'!'||ch>'~'))ch=getchar();
+        if(EOF==ch) return (this->reach_eof());
+        for(;(EOF!=ch)&&(interrupt!=ch)&&(ch>=' '&&ch<='~');ch=getchar())(*s++)=ch;
+        (*s)=0;
         return (*this);
     }
     abio &write_int(int x, char append = 0)
@@ -133,6 +131,12 @@ public:
         while(x){d[nd++]=x%10;x/=10;}
         while(nd--)putchar('0'+d[nd]);
         if(append)putchar(append);
+        return (*this);
+    }
+    abio &write_s(const char *s, char append = 0)
+    {
+        while(*s) putchar(*s++);
+        if(append) putchar(append);
         return (*this);
     }
 }io;
