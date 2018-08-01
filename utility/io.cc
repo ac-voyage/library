@@ -7,6 +7,7 @@ class abio
     static const unsigned BUF_SZ = 65535;
     FILE *istream, *ostream;
     char ibuf[BUF_SZ], obuf[BUF_SZ];
+    bool reached_eof;
     size_t ip, isz;
     size_t op, osz;
     inline void clear_ibuf(void)
@@ -19,6 +20,7 @@ class abio
     }
     inline void clear_buffer(void)
     {
+        reached_eof = false;
         clear_ibuf();
         clear_obuf();
     }
@@ -39,6 +41,11 @@ class abio
         }
         return 0;
     }
+    inline abio &reach_eof(void)
+    {
+        reached_eof = true;
+        return (*this);
+    }
 public:
     abio(FILE *input = stdin, FILE *output = stdout)
     {
@@ -58,6 +65,10 @@ public:
         fclose(istream);
         fclose(ostream);
     }
+    operator bool() const
+    {
+        return (!reached_eof);
+    }
     inline int getchar(void)
     {
         if(0 == isz || isz == ip) read_buffer();
@@ -70,31 +81,41 @@ public:
         if(osz == BUF_SZ) return EOF;
         return (obuf[osz++] = ch);
     }
-    inline int read_int(int &x)
+    abio &read_int(int &x)
     {
-        int flag = 0, ch;
+        int flag = 0, ch = getchar();
+        if(EOF == ch) return (this->reach_eof());
         x = 0;
-        while((EOF!=(ch=getchar()))&&(('-'!=ch)&&((ch<'0')||(ch>'9'))));
-        if(EOF==ch) return EOF;
+        while((EOF!=ch)&&(('-'!=ch)&&((ch<'0')||(ch>'9'))))ch=getchar();
+        if(EOF==ch) return (this->reach_eof());
         if('-'==ch){flag=1;ch=getchar();}
-        if(EOF==ch) return EOF;
+        //if(EOF==ch) return (this->reach_eof());
         for(;(((ch>='0')&&(ch<='9')));ch=getchar()){x*=10;x+=(ch-'0');}
+        //if(EOF==ch)this->reach_eof();
         if(flag)x*=(-1);
-        return 1;
+        return (*this);
     }
-    inline long long int read_ll(long long int &x)
+    abio &read_ll(long long int &x)
     {
-        int flag = 0, ch;
+        int flag = 0, ch = getchar();
+        if(EOF == ch) return (this->reach_eof());
         x = 0ll;
-        while((EOF!=(ch=getchar()))&&(('-'!=ch)&&((ch<'0')||(ch>'9'))));
-        if(EOF==ch) return EOF;
+        while((EOF!=ch)&&(('-'!=ch)&&((ch<'0')||(ch>'9'))))ch=getchar();
+        if(EOF==ch) return (this->reach_eof());
         if('-'==ch){flag=1;ch=getchar();}
-        if(EOF==ch) return EOF;
+        //if(EOF==ch) return (this->reach_eof());
         for(;(((ch>='0')&&(ch<='9')));ch=getchar()){x*=(10ll);x+=(ch-'0');}
-        if(flag)x*=(-1ll);
-        return 1;
+        //if(EOF==ch)this->reach_eof();
+        if(flag)x*=(-1);
+        return (*this);
     }
-    inline void write_ll(long long int x, char append = 0)
+    abio &read_s(char *str, char interrupt = ' ')
+    {
+        int ch = getchar();
+        if(EOF == ch) return (this->reach_eof());
+        return (*this);
+    }
+    abio &write_int(int x, char append = 0)
     {
         int d[20],nd=0;
         if(0==x) putchar('0');
@@ -102,5 +123,16 @@ public:
         while(x){d[nd++]=x%10;x/=10;}
         while(nd--)putchar('0'+d[nd]);
         if(append)putchar(append);
+        return (*this);
     }
-};
+    abio &write_ll(long long int x, char append = 0)
+    {
+        int d[20],nd=0;
+        if(0==x) putchar('0');
+        if(x<0){putchar('-');x=-x;}
+        while(x){d[nd++]=x%10;x/=10;}
+        while(nd--)putchar('0'+d[nd]);
+        if(append)putchar(append);
+        return (*this);
+    }
+}io;
