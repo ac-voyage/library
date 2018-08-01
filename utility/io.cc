@@ -4,7 +4,7 @@ using namespace std;
 
 class abio
 {
-    static const unsigned BUF_SZ = 65535;
+    static const unsigned BUF_SZ = 65536;
     FILE *istream, *ostream;
     char ibuf[BUF_SZ], obuf[BUF_SZ];
     bool reached_eof;
