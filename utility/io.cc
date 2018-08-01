@@ -41,6 +41,7 @@ class abio
         return (*this);
     }
 public:
+    static const char endl = '\n';
     abio(FILE *input = stdin, FILE *output = stdout)
     {
         this->istream = input;
@@ -139,4 +140,17 @@ public:
         if(append) putchar(append);
         return (*this);
     }
+    abio &operator>>(char &ch)
+    {
+        ch = getchar();
+        if(EOF==ch) return (this->reach_eof());
+        return (*this);
+    }
+    abio &operator>>(int &x) { return read_int(x); }
+    abio &operator>>(long long int &x) { return read_ll(x); }
+    abio &operator>>(char *s) { return read_s(s); }
+    abio &operator<<(const char ch) { putchar(ch); return (*this); }
+    abio &operator<<(const int x) { return write_int(x); }
+    abio &operator<<(const long long int x) { return write_ll(x); }
+    abio &operator<<(const char *s) { return write_s(s); }
 }io;
