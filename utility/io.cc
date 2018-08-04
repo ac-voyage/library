@@ -66,8 +66,8 @@ public:
     }
     inline int getchar(void)
     {
-        if(0 == isz || isz == ip) read_buffer();
-        if(0 == isz || isz == ip) return EOF;
+        if(isz == ip) read_buffer();
+        if(isz == ip) return EOF;
         return ibuf[ip++];
     }
     inline int putchar(int ch)
@@ -79,29 +79,19 @@ public:
     abio &read_int(int &x)
     {
         int flag = 0, ch = getchar();
-        if(EOF == ch) return (this->reach_eof());
-        x = 0;
-        while((EOF!=ch)&&(('-'!=ch)&&((ch<'0')||(ch>'9'))))ch=getchar();
-        if(EOF==ch) return (this->reach_eof());
-        if('-'==ch){flag=1;ch=getchar();}
-        //if(EOF==ch) return (this->reach_eof());
-        for(;(((ch>='0')&&(ch<='9')));ch=getchar()){x*=10;x+=(ch-'0');}
-        //if(EOF==ch)this->reach_eof();
-        if(flag)x*=(-1);
+        for (;(EOF!=ch)&&((ch<'0')||(ch>'9'));ch=getchar()) if ('-' == ch) flag = 1;
+        if (EOF == ch) return (this->reach_eof()); x = 0;
+        for (;(ch>='0')&&(ch<='9');ch=getchar()) x = x * 10 + (ch - '0');
+        if ( flag ) x *= (-1);
         return (*this);
     }
     abio &read_ll(long long int &x)
     {
         int flag = 0, ch = getchar();
-        if(EOF == ch) return (this->reach_eof());
-        x = 0ll;
-        while((EOF!=ch)&&(('-'!=ch)&&((ch<'0')||(ch>'9'))))ch=getchar();
-        if(EOF==ch) return (this->reach_eof());
-        if('-'==ch){flag=1;ch=getchar();}
-        //if(EOF==ch) return (this->reach_eof());
-        for(;(((ch>='0')&&(ch<='9')));ch=getchar()){x*=(10ll);x+=(ch-'0');}
-        //if(EOF==ch)this->reach_eof();
-        if(flag)x*=(-1);
+        for (;(EOF!=ch)&&((ch<'0')||(ch>'9'));ch=getchar()) if ('-' == ch) flag = 1;
+        if (EOF == ch) return (this->reach_eof()); x = 0ll;
+        for (;(ch>='0')&&(ch<='9');ch=getchar()) x = x * 10ll + (ch - '0');
+        if ( flag ) x *= (-1ll);
         return (*this);
     }
     /* set interrupt as '\n' to read a whole line. */
