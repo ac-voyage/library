@@ -1,7 +1,5 @@
 #include <cstdio>
 
-using namespace std;
-
 class abio
 {
     static const unsigned BUF_SZ = 65536;
@@ -20,7 +18,7 @@ class abio
     }
     inline size_t read_buffer(void)
     {
-        isz = fread(ibuf, sizeof(char), BUF_SZ, istream);
+        isz = std::fread(ibuf, sizeof(char), BUF_SZ, istream);
         ip = 0;
         return isz;
     }
@@ -28,7 +26,7 @@ class abio
     {
         if(osz)
         {
-            size_t ret = fwrite(obuf+op, sizeof(char), osz-op, ostream);
+            size_t ret = std::fwrite(obuf+op, sizeof(char), osz-op, ostream);
             op += ret;
             if(op == osz) clear_obuf();
             return ret;
@@ -50,15 +48,15 @@ public:
     }
     abio(const char *input, const char *output)
     {
-        this->istream = fopen(input, "r");
-        this->istream = fopen(output, "w+");
+        this->istream = std::fopen(input, "r");
+        this->istream = std::fopen(output, "w+");
         clear_buffer();
     }
     ~abio(void)
     {
         write_buffer();
-        fclose(istream);
-        fclose(ostream);
+        std::fclose(istream);
+        std::fclose(ostream);
     }
     operator bool() const
     {
