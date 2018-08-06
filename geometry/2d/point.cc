@@ -33,11 +33,18 @@ inline int sgn(T x)
     return (x > 0) ? 1 : -1;
 }
 
+inline T sqr(T x)
+{
+  return (x * x);
+}
+
 struct point
 {
     T x,y;
     point(void):x(T()),y(T()){}
     point(T xx, T yy):x(xx),y(yy){}
+    inline T norm2(void) { return sqr(x) + sqr(y); }
+    inline T norm(void) { return sqrt(norm2()); }
     inline point operator-(void) const {return point(-x,-y);}
     inline point operator+(const point& b) const {return point(x+b.x,y+b.y);}
     inline point operator-(const point& b) const {return point(x-b.x,y-b.y);}
