@@ -57,6 +57,7 @@ struct point
     inline point& operator-=(const point& b) {point tmp=(*this)-b;(*this)=tmp;return (*this);}
     inline bool operator==(const point& b) const {return (0==sgn(x-b.x))&&(0==sgn(y-b.y));}
     inline bool operator!=(const point& b) const {return !((*this)==b);}
+    inline point operator<<(const ab_float& theta) const { ab_float ct = cos(theta), st = sin(theta); return point(ct*x - st*y, st*x + ct*y); } /* rotate counter-clockwise in radian */
 };
 
 typedef point vec;
