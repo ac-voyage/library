@@ -14,6 +14,10 @@ struct circle
     circle(void) : r(T()) {}
     circle(point center, T radius) : o(center), r(radius) {}
 
+    inline ab_float arclen(ab_float theta)
+    {
+        return theta * r;
+    }
     inline ab_float circumference(void)
     {
         return 2. * pi * r;
