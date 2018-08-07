@@ -48,7 +48,7 @@ struct circle
       separate = 0x10000,
       unknow_relation = 0xfffff
     };
-    relation_t with(const circle &C)
+    relation_t with(const circle &C) const
     {
         T dis2 = (o->*(C.o)).norm2();
         T dr2 = sqr(r - C.r), rs2 = sqr(r + C.r);
@@ -59,6 +59,23 @@ struct circle
         if ( 0 == sgn(dis2 - rs2) ) return outtouch;
         if ( -1 == sgn(rs2 - dis2) ) return separate;
         return unknow_relation;
+    }
+
+    enum point_relation_t {
+        in = 0x001,
+        on = 0x010,
+        out = 0x100,
+        unknow_point_relation = 0xfff
+    };
+    point_relation_t with(const point &P) const
+    {
+        T dis2 = (o->*P).norm2();
+        T r2 = sqr(r);
+        int type = sgn(dis2 - r2);
+        if (-1 == type) return in;
+        if ( 0 == type) return on;
+        if (+1 == type) return out;
+        return unknow_point_relation;
     }
 
     ab_float central_angle(const point &A, const point &B, const bool reflex = false) const
