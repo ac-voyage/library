@@ -63,7 +63,11 @@ struct circle
 
     ab_float central_angle(const point &A, const point &B, const bool reflex = false) const
     {
-        ;
+        T dot = (A * B);
+        if (0 == sgn(dot)) return 1. * (A != B) * pi;
+        ab_float angle = ((ab_float)(dot)) / r / r;
+        if ( reflex ) angle = 2. * pi - angle;
+        return angle;
     }
 };
 
