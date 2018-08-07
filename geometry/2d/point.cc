@@ -62,8 +62,5 @@ struct point
 
 typedef point vec;
 
-#ifdef ABG2d_USE_LL
-#undef ABG2d_USE_LL
-#endif
 
 }   // namespace `ab_geometry_2d`
