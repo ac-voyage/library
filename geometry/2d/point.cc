@@ -9,10 +9,12 @@ namespace ab_geometry_2d {
 
 using namespace std;
 
+typedef double ab_float;
+
 #ifdef ABG2d_USE_LL
 typedef long long int T;
 #else
-typedef double T;
+typedef ab_float T;
 const T eps = 1e-8;
 #endif
 
