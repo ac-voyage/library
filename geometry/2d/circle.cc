@@ -53,12 +53,17 @@ struct circle
         T dis2 = (o->*(C.o)).norm2();
         T dr2 = sqr(r - C.r), rs2 = sqr(r + C.r);
         if ( 0 == sgn(dis2) && 0 == sgn(dr2) ) return same;
-        if ( dis2 < dr2 ) return contain;
-        if ( dis2 == dr2 ) return intouch;
-        if ( dr2 < dis2 && dis2 < rs2 ) return intersect;
-        if ( dis2 == rs2 ) return outtouch;
-        if ( rs2 < dis2 ) return separate;
+        if ( -1 == sgn(dis2 - dr2) ) return contain;
+        if ( 0 == sgn(dis2 - dr2) ) return intouch;
+        if ( -1 == sgn(dr2 - dis2) && -1 == sgn(dis2 - rs2) ) return intersect;
+        if ( 0 == sgn(dis2 - rs2) ) return outtouch;
+        if ( -1 == sgn(rs2 - dis2) ) return separate;
         return unknow_relation;
+    }
+
+    ab_float central_angle(const point &A, const point &B, const bool reflex = false) const
+    {
+        ;
     }
 };
 
