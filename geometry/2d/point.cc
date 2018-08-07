@@ -35,7 +35,7 @@ inline int sgn(T x)
 
 inline T sqr(T x)
 {
-  return (x * x);
+    return (x * x);
 }
 
 struct point
