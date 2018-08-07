@@ -22,7 +22,7 @@ struct circle
         T dr2 = sqr(raw_diff);
         return (dis2 < dr2) || (including_touch && (dis2 == dr2));
     }
-    bool in(const circle &C, const bool including_touch = false) const
+    inline bool in(const circle &C, const bool including_touch = false) const
     {
       return C.contain(*this, including_touch);
     }
