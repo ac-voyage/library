@@ -3,6 +3,8 @@
 /* requirement: point.cc */
 #include "point.cc"
 
+#include <utility>
+
 namespace ab_geometry_2d {
 
 using namespace std;
@@ -85,6 +87,13 @@ struct circle
         ab_float angle = ((ab_float)(dot)) / r / r;
         if ( reflex ) angle = 2. * pi - angle;
         return angle;
+    }
+
+    /* be sure (*this) intersect with C */
+    pair<point,point> crosspoint(const circle &C) const
+    {
+        ab_float d = (o ->* (C.o)).norm();
+        // TODO:
     }
 };
 

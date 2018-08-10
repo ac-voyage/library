@@ -49,6 +49,7 @@ struct point
     point(T xx, T yy):x(xx),y(yy){}
     inline T norm2(void) { return sqr(x) + sqr(y); }
     inline ab_float norm(void) { return sqrt((ab_float)(norm2())); }
+    inline point rotate(const ab_float &cost, const ab_float &sint) {} // TODO:
     inline point operator-(void) const {return point(-x,-y);}
     inline point operator+(const point& b) const {return point(x+b.x,y+b.y);}
     inline point operator-(const point& b) const {return point(x-b.x,y-b.y);}
