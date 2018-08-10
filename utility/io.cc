@@ -92,6 +92,22 @@ public:
         if ( flag ) x *= (-1ll);
         return (*this);
     }
+    abio &read_unsigned(unsigned &x)
+    {
+        int ch = getchar();
+        for(;(EOF != ch) && ((ch < '0') || (ch > '9'));ch = getchar());
+        if (EOF == ch) return (this->reach_eof()); x = 0u;
+        for(;(ch >= '0') && (ch <= '9');ch = getchar()) x = x * 10u + (ch - '0');
+        return (*this);
+    }
+    abio &read_ull(unsigned long long int &x)
+    {
+        int ch = getchar();
+        for(;(EOF != ch) && ((ch < '0') || (ch > '9'));ch = getchar());
+        if (EOF == ch) return (this->reach_eof()); x = 0ull;
+        for(;(ch >= '0') && (ch <= '9');ch = getchar()) x = x * 10ull + (ch - '0');
+        return (*this);
+    }
     /* set interrupt as '\n' to read a whole line. */
     abio &read_s(char *s, const char interrupt = ' ')
     {
@@ -122,6 +138,24 @@ public:
         if(append)putchar(append);
         return (*this);
     }
+    abio &write_unsigned(unsigned x, char append = 0)
+    {
+        int d[20],nd=0;
+        if(0==x) putchar('0');
+        while(x){d[nd++]=x%10;x/=10;}
+        while(nd--)putchar('0'+d[nd]);
+        if(append)putchar(append);
+        return (*this);
+    }
+    abio &write_ull(unsigned long long int x, char append = 0)
+    {
+        int d[20],nd=0;
+        if(0==x) putchar('0');
+        while(x){d[nd++]=x%10;x/=10;}
+        while(nd--)putchar('0'+d[nd]);
+        if(append)putchar(append);
+        return (*this);
+    }
     abio &write_s(const char *s, char append = 0)
     {
         while(*s) putchar(*s++);
@@ -136,9 +170,13 @@ public:
     }
     abio &operator>>(int &x) { return read_int(x); }
     abio &operator>>(long long int &x) { return read_ll(x); }
+    abio &operator>>(unsigned &x) { return read_unsigned(x); }
+    abio &operator>>(unsigned long long int &x) { return read_ull(x); }
     abio &operator>>(char *s) { return read_s(s); }
     abio &operator<<(const char ch) { putchar(ch); return (*this); }
     abio &operator<<(const int x) { return write_int(x); }
     abio &operator<<(const long long int x) { return write_ll(x); }
+    abio &operator<<(const unsigned x) { return write_unsigned(x); }
+    abio &operator<<(const unsigned long long int x) { return write_ull(x); }
     abio &operator<<(const char *s) { return write_s(s); }
 }io;
