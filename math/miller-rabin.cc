@@ -47,7 +47,7 @@ bool mr(ll n, int k)
 {
     ll d = n - 1;
     int s = 0;
-    while (0 == (d & 1))
+    while (d > 1 && 0 == (d & 1))
     {
         s++;
         d >>= 1;
@@ -71,6 +71,7 @@ bool mr(ll n, int k)
 const int pre[] = {3, 5, 7, 11, 13};
 bool test(ll n, int k = 5)
 {
+    if (2 == n) return true;
     if (0 == (n & 1)) return false;
     if (strong == n) return false;
     for (int i = 0; i < 5; i++)
