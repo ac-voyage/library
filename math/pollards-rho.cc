@@ -32,9 +32,10 @@ ll find(ll n, int c = -1)
     ll y = x, k = 2;
     for (int i = 2; ; i++)
     {
-        x = add(mul(x, x, n), n - 1, n);
-        ll d = gcd( abs(y - x) , n );
+        x = add(mul(x, x, n), (n + c) % n, n);
+        ll d = gcd( y - x + n , n ); // change to abs(y - x) if get WA
         if (1 != d && n != d) return d;
+        if (y == x) return n;
         if (i == k)
         {
             y = x;
