@@ -30,3 +30,11 @@ struct Mod64 {
 
 Mod64::u64 Mod64::mod, Mod64::inv, Mod64::r2;
 /* -- } Montgomery modular algorithm -- */
+
+/**
+ * usage:
+ * First, Mod64::set_mod();
+ * Mod64 a, b, c(init_val);
+ * a = b * c;
+ * printf("%llu\n", a.get());
+ **/
