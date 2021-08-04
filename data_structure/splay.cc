@@ -43,7 +43,7 @@ struct node
         if (f != NULL)
         {
             node *ff = f->f;
-            int d = which(), fd = f->which();
+            int d = which(), fd = ff ? f->which() : 0;
             setc(f->setc(ch[d ^ 1], d), d ^ 1);
             setf(ff, fd);
         }
